@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Employee_auto_approval" name="Employee auto approval" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.14.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <decision id="check_auto_approval" name="Auto approval">
+    <decisionTable id="DecisionTable_1searit" hitPolicy="FIRST">
+      <input id="Input_1" label="Employee&#39;s Age">
+        <inputExpression id="InputExpression_1" typeRef="integer" expressionLanguage="feel">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Can be auto-approved?" name="isAutoApproved" typeRef="boolean" biodi:width="192" />
+      <rule id="DecisionRule_1kw73tn">
+        <inputEntry id="UnaryTests_0yvjx84">
+          <text>&gt;= 18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1idepmd">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0icwem0">
+        <inputEntry id="UnaryTests_033rdc2">
+          <text>&lt; 18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1o51fhu">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="check_auto_approval">
+        <dc:Bounds height="80" width="180" x="150" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,92 @@
+{
+  "components": [
+    {
+      "label": "Employee Id",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0g9s4a3",
+        "columns": null
+      },
+      "id": "Field_0zbxx7e",
+      "key": "employeeId",
+      "validate": {
+        "required": true
+      },
+      "disabled": true
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0633az6",
+        "columns": null
+      },
+      "id": "Field_0oko5vq",
+      "key": "employeeEmail",
+      "disabled": true,
+      "readonly": false
+    },
+    {
+      "label": "Age",
+      "type": "number",
+      "layout": {
+        "row": "Row_0efhc5a",
+        "columns": null
+      },
+      "id": "Field_0vuluuu",
+      "key": "age",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Expense Description",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0wa6cvi",
+        "columns": null
+      },
+      "id": "Field_1vwa34y",
+      "key": "description",
+      "validate": {
+        "required": true
+      },
+      "disabled": true
+    },
+    {
+      "label": "Expense Amount",
+      "type": "number",
+      "layout": {
+        "row": "Row_03viit4",
+        "columns": null
+      },
+      "id": "Field_0tknmaa",
+      "key": "amount",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Approve",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0xfg4k7",
+        "columns": null
+      },
+      "id": "Field_1k60n94",
+      "key": "approved",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_1iy0g9h",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.14.0"
+  },
+  "schemaVersion": 10
+}

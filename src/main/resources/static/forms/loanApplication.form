@@ -1,0 +1,104 @@
+{
+  "components": [
+    {
+      "label": "Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1yrx8ao",
+        "columns": null
+      },
+      "id": "Field_1ysa6u0",
+      "key": "name",
+      "validate": {
+        "required": true
+      },
+      "properties": {
+        "endpoint": "google.api.com"
+      }
+    },
+    {
+      "label": "Date of Birth",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1kja7uw",
+        "columns": null
+      },
+      "id": "Field_10bte48",
+      "key": "birthDate",
+      "validate": {
+        "required": true,
+        "pattern": "\\d{1,2}\\/\\d{1,2}\\/\\d{2,4}"
+      }
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1a3naqy",
+        "columns": null
+      },
+      "id": "Field_1hd1tqe",
+      "key": "email",
+      "validate": {
+        "required": true,
+        "pattern": "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+      }
+    },
+    {
+      "label": "Phone",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_02xnmbi",
+        "columns": null
+      },
+      "id": "Field_16y537f",
+      "key": "phone",
+      "validate": {
+        "required": true,
+        "pattern": "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$"
+      },
+      "properties": {}
+    },
+    {
+      "label": "Comment",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_132mbci",
+        "columns": null
+      },
+      "id": "Field_1pvb8x7",
+      "key": "comment"
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1v0hsva",
+        "columns": 3
+      },
+      "id": "Field_1nowujb",
+      "key": "field_0jyoz7l"
+    },
+    {
+      "action": "reset",
+      "label": "Cancel",
+      "type": "button",
+      "layout": {
+        "row": "Row_1v0hsva",
+        "columns": null
+      },
+      "id": "Field_0xfskd7",
+      "key": "field_19yl2z6"
+    }
+  ],
+  "type": "default",
+  "id": "loan_application",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.14.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 10
+}

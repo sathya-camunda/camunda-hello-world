@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_013prob" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.14.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
-  <bpmn:process id="Process_1lgunb7" isExecutable="false" camunda:historyTimeToLive="180" camunda:isStartableInTasklist="false">
-    <bpmn:startEvent id="StartEvent_1" name="Loan application">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_013prob" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.14.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="loan_application" name="Process Loan Application" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1" name="Loan application" camunda:formRef="loan_application" camunda:formRefBinding="latest">
       <bpmn:outgoing>Flow_1aj9i7n</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0ftzbp2" name="First level review" camunda:formKey="">
+    <bpmn:userTask id="Activity_0ftzbp2" name="First level review">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="Input_1roh07h" />
@@ -16,7 +16,7 @@
       <bpmn:outgoing>Flow_1drmtx8</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1aj9i7n" sourceRef="StartEvent_1" targetRef="Activity_0ftzbp2" />
-    <bpmn:exclusiveGateway id="Gateway_07qwctv" name="Is approved?">
+    <bpmn:exclusiveGateway id="Gateway_07qwctv" name="Is approved?" default="Flow_0k2j4j3">
       <bpmn:incoming>Flow_1drmtx8</bpmn:incoming>
       <bpmn:outgoing>Flow_0k2j4j3</bpmn:outgoing>
       <bpmn:outgoing>Flow_0uv104s</bpmn:outgoing>
@@ -25,14 +25,32 @@
     <bpmn:sequenceFlow id="Flow_0k2j4j3" sourceRef="Gateway_07qwctv" targetRef="Activity_1kskbbv" />
     <bpmn:userTask id="Activity_1kskbbv" name="Second level review">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="test">google</camunda:inputParameter>
-        </camunda:inputOutput>
+        <camunda:formData>
+          <camunda:formField id="name" type="string" defaultValue="${name}">
+            <camunda:properties />
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="email" type="string" defaultValue="${email}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="approverComments" label="Approver Comments" type="string">
+            <camunda:validation>
+              <camunda:constraint name="maxlength" config="500" />
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0k2j4j3</bpmn:incoming>
       <bpmn:outgoing>Flow_0np9aj5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0uv104s" sourceRef="Gateway_07qwctv" targetRef="Activity_12qlwq9" />
+    <bpmn:sequenceFlow id="Flow_0uv104s" sourceRef="Gateway_07qwctv" targetRef="Activity_12qlwq9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:userTask id="Activity_12qlwq9" name="Resubmit">
       <bpmn:extensionElements>
         <camunda:inputOutput>
@@ -44,20 +62,22 @@
       <bpmn:outgoing>Flow_1rskd8p</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1rskd8p" sourceRef="Activity_12qlwq9" targetRef="Activity_0ftzbp2" />
-    <bpmn:exclusiveGateway id="Gateway_0q8n7gl" name="Is approved?">
+    <bpmn:exclusiveGateway id="Gateway_0q8n7gl" name="Is approved?" default="Flow_1k25g19">
       <bpmn:incoming>Flow_0np9aj5</bpmn:incoming>
       <bpmn:outgoing>Flow_1s176xo</bpmn:outgoing>
       <bpmn:outgoing>Flow_1k25g19</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0np9aj5" sourceRef="Activity_1kskbbv" targetRef="Gateway_0q8n7gl" />
-    <bpmn:sequenceFlow id="Flow_1s176xo" sourceRef="Gateway_0q8n7gl" targetRef="Activity_12qlwq9" />
+    <bpmn:sequenceFlow id="Flow_1s176xo" sourceRef="Gateway_0q8n7gl" targetRef="Activity_12qlwq9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1tczb8l">
       <bpmn:incoming>Flow_1k25g19</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1k25g19" sourceRef="Gateway_0q8n7gl" targetRef="Event_1tczb8l" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1lgunb7">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="loan_application">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>

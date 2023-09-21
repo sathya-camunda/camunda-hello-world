@@ -4,25 +4,22 @@
     <bpmn:startEvent id="StartEvent_1" name="Loan application" camunda:formRef="loan_application" camunda:formRefBinding="latest">
       <bpmn:outgoing>Flow_1aj9i7n</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0ftzbp2" name="First level review">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="Input_1roh07h" />
-        </camunda:inputOutput>
-        <camunda:executionListener expression="${execution.setVariable(&#39;test&#39;, &#39;camunda&#39;)}" event="start" />
-      </bpmn:extensionElements>
+    <bpmn:userTask id="Activity_0ftzbp2" name="First level review" camunda:formKey="embedded:app:forms/embeddedForm.html">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1aj9i7n</bpmn:incoming>
       <bpmn:incoming>Flow_1rskd8p</bpmn:incoming>
       <bpmn:outgoing>Flow_1drmtx8</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1aj9i7n" sourceRef="StartEvent_1" targetRef="Activity_0ftzbp2" />
-    <bpmn:exclusiveGateway id="Gateway_07qwctv" name="Is approved?" default="Flow_0k2j4j3">
+    <bpmn:exclusiveGateway id="Gateway_07qwctv" name="Is approved?" default="Flow_0uv104s">
       <bpmn:incoming>Flow_1drmtx8</bpmn:incoming>
       <bpmn:outgoing>Flow_0k2j4j3</bpmn:outgoing>
       <bpmn:outgoing>Flow_0uv104s</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1drmtx8" sourceRef="Activity_0ftzbp2" targetRef="Gateway_07qwctv" />
-    <bpmn:sequenceFlow id="Flow_0k2j4j3" sourceRef="Gateway_07qwctv" targetRef="Activity_1kskbbv" />
+    <bpmn:sequenceFlow id="Flow_0k2j4j3" sourceRef="Gateway_07qwctv" targetRef="Activity_1kskbbv">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isFirstLevelApproved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:userTask id="Activity_1kskbbv" name="Second level review">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -43,14 +40,13 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
+          <camunda:formField id="isSecondLevelApproved" label="Approve?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0k2j4j3</bpmn:incoming>
       <bpmn:outgoing>Flow_0np9aj5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0uv104s" sourceRef="Gateway_07qwctv" targetRef="Activity_12qlwq9">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0uv104s" sourceRef="Gateway_07qwctv" targetRef="Activity_12qlwq9" />
     <bpmn:userTask id="Activity_12qlwq9" name="Resubmit">
       <bpmn:extensionElements>
         <camunda:inputOutput>
@@ -62,19 +58,19 @@
       <bpmn:outgoing>Flow_1rskd8p</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1rskd8p" sourceRef="Activity_12qlwq9" targetRef="Activity_0ftzbp2" />
-    <bpmn:exclusiveGateway id="Gateway_0q8n7gl" name="Is approved?" default="Flow_1k25g19">
+    <bpmn:exclusiveGateway id="Gateway_0q8n7gl" name="Is approved?" default="Flow_1s176xo">
       <bpmn:incoming>Flow_0np9aj5</bpmn:incoming>
       <bpmn:outgoing>Flow_1s176xo</bpmn:outgoing>
       <bpmn:outgoing>Flow_1k25g19</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0np9aj5" sourceRef="Activity_1kskbbv" targetRef="Gateway_0q8n7gl" />
-    <bpmn:sequenceFlow id="Flow_1s176xo" sourceRef="Gateway_0q8n7gl" targetRef="Activity_12qlwq9">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1s176xo" sourceRef="Gateway_0q8n7gl" targetRef="Activity_12qlwq9" />
     <bpmn:endEvent id="Event_1tczb8l">
       <bpmn:incoming>Flow_1k25g19</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1k25g19" sourceRef="Gateway_0q8n7gl" targetRef="Event_1tczb8l" />
+    <bpmn:sequenceFlow id="Flow_1k25g19" sourceRef="Gateway_0q8n7gl" targetRef="Event_1tczb8l">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSecondLevelApproved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="loan_application">
